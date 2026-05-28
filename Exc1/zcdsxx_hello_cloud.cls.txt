@@ -1,1 +1,19 @@
+CLASS zcds00_hello_cloud DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
+  PUBLIC SECTION.
+    METHODS: hello_world.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcds00_hello_cloud IMPLEMENTATION.
+  METHOD hello_world.
+    WRITE: / 'Hello World'.
+  ENDMETHOD.
+
+ENDCLASS.
