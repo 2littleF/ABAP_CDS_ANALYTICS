@@ -2,7 +2,8 @@
 
 **Umstellen einer Klasse für ABAP Cloud**<br>
 <br>
-Lege die Klasse zcdsxx_hello_cloud nach Vorlage an.<br>
+Lege die Klasse zcdsxx_hello_cloud nach Vorlage an.<br> 
+Führe sie im Testmodus aus.<br>
 <br>
 Stelle die Klasse auf ABAP for Cloud Development um und prüfe sie erneut.<br>
 Warum springt der Syntax-Checker an?<br>
