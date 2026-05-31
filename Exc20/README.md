@@ -1,4 +1,4 @@
 # ABAP CDS Fortgeschrittene Konzepte
 
-**Metadaten Erweiterung**<br>
+**Input Parameter**<br>
 <br>

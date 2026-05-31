@@ -1,4 +1,4 @@
-# ABAP CDS Berechtigung
+# ABAP CDS Fortgeschrittene Konzepte
 
-**Einfache DCL anlegen**<br>
+**Virtuelle Elemente**<br>
 <br>

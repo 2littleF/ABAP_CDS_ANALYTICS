@@ -1,4 +1,4 @@
-# ABAP CDS Verwendung
+# ABAP CDS Berechtigung
 
-**ALV IDA**<br>
+**DCL testen**<br>
 <br>

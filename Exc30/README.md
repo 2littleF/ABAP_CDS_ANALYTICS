@@ -1,4 +1,4 @@
 # ABAP CDS Verwendung
 
-**ALV IDA**<br>
+**Embedded Analytics**<br>
 <br>

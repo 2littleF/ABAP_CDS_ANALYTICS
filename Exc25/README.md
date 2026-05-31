@@ -1,4 +1,4 @@
 # ABAP CDS Fortgeschrittene Konzepte
 
-**Erweiterung eines CDS View**<br>
+**CDS Table Function**<br>
 <br>

@@ -1,4 +1,4 @@
 # ABAP CDS Berechtigung
 
-**DCL testen**<br>
+**Einfache DCL anlegen**<br>
 <br>
