@@ -1,0 +1,16 @@
+@Metadata.layer: #PARTNER
+annotate entity ZI_Umsatz_KundenverhaltenXX
+    with 
+{
+    @UI.lineItem: [{label: 'Gesellschaft' }]
+    Carrid;
+    @UI.lineItem: [{label: 'Verbindung' }]    
+    Connid;
+    @UI.lineItem: [{label: 'Umsatz' }]    
+    Umsatz_pro_Flugverbindung;
+    @UI.lineItem: [{label: 'Waehrung' }]        
+    Currency_EUR;
+    @UI.lineItem: [{label: 'Tage im Voraus' }]    
+    Durchschn_Buchung_Voraus;
+    
+}

@@ -1,0 +1,68 @@
+CLASS zcl_amdp_template DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES if_amdp_marker_hdb.
+
+    TYPES: BEGIN OF ty_s_customer,
+             id         TYPE scustom-id,
+             name       TYPE scustom-name,
+             postcode   TYPE scustom-postcode,
+             city       TYPE scustom-city,
+             country    TYPE scustom-country,
+             days_ahead TYPE i,
+           END OF ty_s_customer.
+    TYPES: ty_t_customers TYPE STANDARD TABLE OF ty_s_customer WITH NON-UNIQUE KEY id name.
+
+    CLASS-METHODS early_bird_and_last_minute
+    IMPORTING VALUE(iv_number) TYPE i
+    VALUE(iv_mandt) TYPE mandt
+    EXPORTING
+    VALUE(et_cust) TYPE ty_t_customers.
+
+    CLASS-METHODS consumer.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_amdp_template IMPLEMENTATION.
+
+
+  METHOD early_bird_and_last_minute BY DATABASE PROCEDURE FOR HDB
+  LANGUAGE SQLSCRIPT
+  OPTIONS READ-ONLY
+  USING scustom sbook.
+
+et_cust = select top :iv_number
+    c.id, c.name, c.postcode, c.city, c.country,
+    avg( days_between(b.order_date,b.fldate) ) as days_ahead
+    from scustom as c inner join sbook as b
+    on c.mandt = b. mandt
+    and c.id = b.customid
+    where c.mandt = :iv_mandt
+    and b.cancelled <> 'X'
+    group by c.id, c.name, c.postcode, c.city, c.country;
+
+  ENDMETHOD.
+
+  METHOD consumer.
+
+    DATA: customer type ty_t_customers.
+
+          early_bird_and_last_minute(
+            EXPORTING
+              iv_number = 10
+              iv_mandt  = sy-mandt
+            IMPORTING
+              et_cust   = customer ).
+
+    write: / lines( customer ).
+
+  ENDMETHOD.
+
+ENDCLASS.

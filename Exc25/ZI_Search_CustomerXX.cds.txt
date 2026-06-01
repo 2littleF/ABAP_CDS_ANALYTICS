@@ -1,0 +1,12 @@
+@EndUserText.label: 'Kundensuche'
+define table function ZI_SEARCH_CUSTOMERXX
+with parameters name_in : s_custname
+returns {
+  mandt: s_mandt;
+  id : s_customer;
+  name : s_custname;
+  city : city;
+  country : s_country;  
+  fuzzy_score : abap.dec(3, 2);
+}
+implemented by method ZCL_GET_CUSTOMERXX=>SEARCH_KUNDE;

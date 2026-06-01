@@ -1,0 +1,53 @@
+*&---------------------------------------------------------------------*
+*& Report zexample_97
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zexample_97.
+
+TYPES: BEGIN OF ty_s_carrier,
+         carrid           TYPE scarr-carrid,
+         revenue_first    TYPE sbook-loccuram,
+         revenue_business TYPE sbook-loccuram,
+         revenue_economy  TYPE sbook-loccuram,
+       END OF ty_s_carrier.
+
+TYPES: BEGIN OF ty_s_scarr,
+         carrid   TYPE scarr-carrid,
+         carrname TYPE scarr-carrname,
+         currcode TYPE scarr-currcode,
+       END OF ty_s_scarr.
+TYPES: BEGIN OF ty_s_sbook,
+         carrid    TYPE sbook-carrid,
+         class     TYPE sbook-class,
+         loccurkey TYPE sbook-loccurkey,
+         loccuram  TYPE sbook-loccuram,
+       END OF ty_s_sbook.
+DATA ls_carrier TYPE ty_s_carrier.
+DATA: lt_scarr TYPE SORTED TABLE OF ty_s_scarr WITH UNIQUE KEY carrid,
+      ls_scarr TYPE ty_s_scarr.
+DATA: lt_sbook TYPE SORTED TABLE OF ty_s_sbook WITH NON-UNIQUE KEY carrid,
+      ls_sbook TYPE ty_s_sbook.
+
+DATA: carriers LIKE TABLE OF ls_carrier.
+
+SELECT carrid carrname currcode FROM scarr INTO TABLE lt_scarr.
+
+SELECT carrid class loccurkey loccuram FROM sbook INTO TABLE lt_sbook
+  WHERE cancelled <> 'X'.
+
+LOOP AT lt_scarr INTO ls_scarr.
+  CLEAR ls_carrier.
+  LOOP AT lt_sbook INTO ls_sbook WHERE carrid = ls_scarr-carrid.
+    CASE ls_sbook-class.
+      WHEN 'F'. "First Class Booking
+        ls_carrier-revenue_first = ls_carrier-revenue_first + ls_sbook-loccuram.
+      WHEN 'C'. "Business Class Booking
+        ls_carrier-revenue_business = ls_carrier-revenue_business + ls_sbook-loccuram.
+      WHEN 'Y'. "Economy Class Booking
+        ls_carrier-revenue_economy = ls_carrier-revenue_economy + ls_sbook-loccuram.
+    ENDCASE.
+  ENDLOOP.
+  MOVE-CORRESPONDING ls_scarr TO ls_carrier.
+  APPEND ls_carrier TO carriers.
+ENDLOOP.

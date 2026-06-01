@@ -1,0 +1,43 @@
+*&---------------------------------------------------------------------*
+*& Report zexample_97
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zeXXopen.
+
+TYPES: BEGIN OF ty_s_carrier,
+         carrid           TYPE scarr-carrid,
+         revenue_first    TYPE sbook-loccuram,
+         revenue_business TYPE sbook-loccuram,
+         revenue_economy  TYPE sbook-loccuram,
+       END OF ty_s_carrier.
+
+TYPES: BEGIN OF ty_s_scarr,
+         carrid   TYPE scarr-carrid,
+         carrname TYPE scarr-carrname,
+         currcode TYPE scarr-currcode,
+       END OF ty_s_scarr.
+TYPES: BEGIN OF ty_s_sbook,
+         carrid    TYPE sbook-carrid,
+         class     TYPE sbook-class,
+         loccurkey TYPE sbook-loccurkey,
+         loccuram  TYPE sbook-loccuram,
+       END OF ty_s_sbook.
+DATA ls_carrier TYPE ty_s_carrier.
+DATA: lt_scarr TYPE SORTED TABLE OF ty_s_scarr WITH UNIQUE KEY carrid,
+      ls_scarr TYPE ty_s_scarr.
+DATA: lt_sbook TYPE SORTED TABLE OF ty_s_sbook WITH NON-UNIQUE KEY carrid,
+      ls_sbook TYPE ty_s_sbook.
+
+DATA: carriers LIKE TABLE OF ls_carrier.
+
+SELECT
+  a~carrid,
+  SUM( CASE b~class WHEN 'F' THEN b~loccuram ELSE 0 END ) AS revenue_first,
+  SUM( CASE b~class WHEN 'C' THEN b~loccuram ELSE 0 END ) AS revenue_business,
+  SUM( CASE b~class WHEN 'Y' THEN b~loccuram ELSE 0 END ) AS revenue_economy
+  FROM scarr AS a LEFT OUTER JOIN sbook AS b
+  ON a~carrid = b~carrid
+  WHERE b~cancelled <> 'X' OR b~cancelled IS NULL
+  GROUP BY a~carrid ORDER BY a~carrid
+INTO TABLE @carriers.

@@ -1,0 +1,3 @@
+define view entity buffer on ZI_UMSATZ_KUNDENVERHALTENXX
+  layer partner
+  type full

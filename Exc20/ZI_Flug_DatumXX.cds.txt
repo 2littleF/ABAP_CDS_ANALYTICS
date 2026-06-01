@@ -1,0 +1,31 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'FlugDatumWithParameters'
+@Metadata.ignorePropagatedAnnotations: true
+define view entity ZI_Flug_DatumXX     
+with parameters p_target_curr: s_curr,
+                    @Environment.systemField: #SYSTEM_DATE
+                    p_rate_date: abap.dats 
+as select from sflight    
+{
+    key carrid as Carrid,
+    key connid as Connid,
+    key fldate as Fldate,
+    @Semantics.amount.currencyCode: 'Currency'
+    price as Price,
+    currency as Currency,
+    @Semantics.amount.currencyCode: 'Zielwaehrung'
+    currency_conversion( amount => price, source_currency => currency, 
+                            target_currency => $parameters.p_target_curr, 
+                            exchange_rate_date => $parameters.p_rate_date ) as Preis_Ziel_Waehrung,
+    $parameters.p_target_curr as Zielwaehrung,
+    planetype as Planetype,
+    seatsmax as Seatsmax,
+    seatsocc as Seatsocc,
+    @Semantics.amount.currencyCode: 'Currency'
+    paymentsum as Paymentsum,
+    seatsmax_b as SeatsmaxB,
+    seatsocc_b as SeatsoccB,
+    seatsmax_f as SeatsmaxF,
+    seatsocc_f as SeatsoccF
+}

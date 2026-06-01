@@ -1,0 +1,14 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Virtual Elements'
+@Metadata.ignorePropagatedAnnotations: true
+@OData.publish: true
+define view entity ZI_VIRTUAL_ELEMENTXX as select from sflight
+{
+    key carrid as Carrid,
+    key connid as Connid,
+    key fldate as Fldate,
+    planetype as Planetype,
+    @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZCL_VIRTUAL_EXITXX'
+    cast( '' as s_planetye ) as Plane_Name
+}

@@ -1,0 +1,17 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'UmsatzPropagation'
+@Metadata.ignorePropagatedAnnotations: false
+define view entity ZI_Umsatz_PropaXX as select from ZI_Umsatz_KundenverhaltenXX
+{
+@EndUserText.label: null
+    key Carrid,
+    @EndUserText.quickInfo: 'Verbindung'    
+    key Connid,
+    @EndUserText.quickInfo: 'Umsatz pro Flugverbindung'    
+    key Umsatz_pro_Flugverbindung,
+    @EndUserText.quickInfo: 'Waehrung'
+    Currency_EUR,
+    @EndUserText.quickInfo: 'Buchung im Voraus im Durchschnitt'
+    Durchschn_Buchung_Voraus
+}

@@ -1,0 +1,41 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Buchungen'
+@Metadata.ignorePropagatedAnnotations: false
+define view entity ZI_BuchungXX
+  as select from sbook
+{
+      -- @Consumption.valueHelpDefinition: [{ entity: { name: 'VALUEHelp', element: 'FIELD' } }]
+      --key CAST ( carrid AS s_carrid PRESERVING TYPE ) AS Carrid,
+  key carrid                                as Carrid,
+  key connid                                as Connid,
+  key fldate                                as Fldate,
+  key bookid                                as Bookid,
+      customid                              as Customid,
+      custtype                              as Custtype,
+      smoker                                as Smoker,
+      @Semantics.quantity.unitOfMeasure:'wunit'
+      luggweight                            as Luggweight,
+      wunit                                 as Wunit,
+      invoice                               as Invoice,
+      class                                 as Class,
+      case class
+          when 'Y' then 'Economy'
+          when 'F' then 'First'
+          else 'Business'
+      end                                   as Class_Text,
+      @Semantics.amount.currencyCode:'forcurkey'
+      forcuram                              as Forcuram,
+      forcurkey                             as Forcurkey,
+      @Semantics.amount.currencyCode:'loccurkey'
+      loccuram                              as Loccuram,
+      loccurkey                             as Loccurkey,
+      order_date                            as OrderDate,
+      counter                               as Counter,
+      agencynum                             as Agencynum,
+      cancelled                             as Cancelled,
+      reserved                              as Reserved,
+      passname                              as Passname,
+      passform                              as Passform,
+      passbirth                             as Passbirth
+}

@@ -1,0 +1,23 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'KundeFluege'
+@Metadata.ignorePropagatedAnnotations: true
+define view entity ZI_Kunden_FluegeXX
+  as select from    ZI_KundeXX    as Kunde
+    left outer join ( ZI_BuchungXX  as Buchung  
+    inner join      ZI_FlugplanXX as Flugplan on  Buchung.Carrid = Flugplan.Carrid
+                                              and Buchung.Connid = Flugplan.Connid
+    inner join      ZI_AirportXX  as Abflug   on Flugplan.Airpfrom = Abflug.Id
+    inner join      ZI_AirportXX  as Ziel     on Flugplan.Airpto = Ziel.Id )
+    on Kunde.Id = Buchung.Customid
+{
+  key Kunde.Id               as KundenNr,
+      Kunde.Name,
+      Flugplan.Carrid,
+      Flugplan.Connid,
+      Abflug.Name            as Ankunftsflughafen,
+      Ziel.Name              as Zielflughafen,
+      @Semantics.quantity.unitOfMeasure: 'Distid_km'
+      Flugplan.Distanz_in_KM as Distanz,
+      Flugplan.Distid_km
+}

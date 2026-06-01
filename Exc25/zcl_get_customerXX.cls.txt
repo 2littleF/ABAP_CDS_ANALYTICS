@@ -1,0 +1,28 @@
+CLASS zcl_get_customerXX DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    INTERFACES if_amdp_marker_hdb .
+    CLASS-METHODS: SEARCH_KUNDE FOR TABLE FUNCTION ZI_SEARCH_CUSTOMERXX.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_get_customerXX IMPLEMENTATION.
+  METHOD search_kunde BY DATABASE FUNCTION FOR HDB
+                         LANGUAGE SQLSCRIPT
+                         OPTIONS READ-ONLY
+                         USING scustom.
+RETURN SELECT mandt, id, name, city, country, score() as fuzzy_score
+FROM scustom
+WHERE contains( name, :name_in, fuzzy( 0.7 ) )
+order by score() desc;
+
+  ENDMETHOD.
+
+ENDCLASS.

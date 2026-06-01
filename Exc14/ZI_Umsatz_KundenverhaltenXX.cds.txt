@@ -1,0 +1,20 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'UmsatzKundenverhalten'
+@Metadata.ignorePropagatedAnnotations: true
+define view entity ZI_Umsatz_KundenverhaltenXX as select from ZI_BuchungXX as Buchung
+inner join ZI_Umsatz_pro_FlugXX as Umsatz
+    on Buchung.Carrid = Umsatz.Carrid
+    and Buchung.Connid = Umsatz.Connid 
+{
+    Buchung.Carrid,
+    Buchung.Connid,
+    @Semantics.amount.currencyCode: 'Currency_EUR'
+    Umsatz.Umsatz_pro_Flugverbindung,
+    Umsatz.Currency_EUR,
+    avg(Buchung.Buchung_im_Voraus as abap.dec(12,2)) as Durchschn_Buchung_Voraus
+} group by 
+    Buchung.Carrid,
+    Buchung.Connid,
+    Umsatz.Umsatz_pro_Flugverbindung,
+    Umsatz.Currency_EUR

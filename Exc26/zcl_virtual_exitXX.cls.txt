@@ -1,0 +1,40 @@
+CLASS zcl_virtual_exitXX DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES if_sadl_exit .
+    INTERFACES if_sadl_exit_calc_element_read .
+    METHODS: write_result .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_virtual_exitXX IMPLEMENTATION.
+
+
+  METHOD if_sadl_exit_calc_element_read~calculate.
+    DATA: view_data TYPE STANDARD TABLE OF zi_virtual_element WITH EMPTY KEY.
+    view_data = CORRESPONDING #( it_original_data ).
+    LOOP AT view_data REFERENCE INTO DATA(view_data_line).
+      view_data_line->plane_name = reverse( view_data_line->Planetype ).
+    ENDLOOP.
+    ct_calculated_data = CORRESPONDING #( view_data ).
+  ENDMETHOD.
+
+
+  METHOD if_sadl_exit_calc_element_read~get_calculation_info.
+  ENDMETHOD.
+
+  METHOD write_result.
+    SELECT DISTINCT Planetype, Plane_Name FROM zi_virtual_element
+      INTO TABLE @DATA(result).
+    LOOP AT result INTO DATA(result_line).
+      WRITE: / result_line.
+    ENDLOOP.
+  ENDMETHOD.
+
+ENDCLASS.

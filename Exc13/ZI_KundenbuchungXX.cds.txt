@@ -1,0 +1,9 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Kundenbuchung'
+@Metadata.ignorePropagatedAnnotations: true
+define view entity ZI_KundenbuchungXX as select from ZI_BuchungXX
+{
+    Customid,
+    ceil(avg(Buchung_im_Voraus as abap.dec(12,2))) as Durchschnitt_Vorausbuchung
+} group by Customid

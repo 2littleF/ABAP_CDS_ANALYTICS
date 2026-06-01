@@ -1,0 +1,17 @@
+*&---------------------------------------------------------------------*
+*& Report zeXXamdp_early_bird
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zeXXamdp_early_bird.
+
+zcl_amdp_template=>early_bird_and_last_minute(
+            EXPORTING
+              iv_number = 100
+              iv_mandt  = sy-mandt
+            IMPORTING
+              et_cust   = DATA(early_bird) ).
+
+LOOP AT early_bird INTO DATA(bird).
+  WRITE: / bird-name, bird-city, bird-country, bird-days_ahead.
+ENDLOOP.

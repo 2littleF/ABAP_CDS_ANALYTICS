@@ -1,0 +1,21 @@
+*&---------------------------------------------------------------------*
+*& Report zealv__ida_cds
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zsearchXX.
+
+PARAMETERS: pa_name type s_custname.
+
+DATA: lo_exc TYPE REF TO cx_salv_function_not_supported.
+
+TRY.
+    DATA(table_ida) = cl_salv_gui_table_ida=>create_for_cds_view( 'ZI_SEARCH_CUSTOMERXX' ).
+    table_ida->set_view_parameters(
+                it_parameters = VALUE #( ( name = 'NAME_IN'
+                                           value = pa_name )
+                                        ) ).
+    table_ida->fullscreen( )->display( ).
+  CATCH cx_salv_function_not_supported INTO lo_exc.
+    MESSAGE lo_exc TYPE 'I'.
+ENDTRY.

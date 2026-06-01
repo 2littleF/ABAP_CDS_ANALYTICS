@@ -1,0 +1,26 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'FlugRoute'
+@Metadata.ignorePropagatedAnnotations: false
+define view entity ZI_Flug_RouteXX as select from ZI_FlugXX as Flug
+association[1..1] to ZI_FlugplanXX as _Plan
+on Flug.Carrid = _Plan.Carrid
+and Flug.Connid = _Plan.Connid
+{
+    key Carrid,
+    key Connid,
+    key Fldate,
+    Price,
+    Currency,
+    Preis_in_Euro,
+    Currency_EUR,
+    Planetype,
+    Seatsmax,
+    Seatsocc,
+    Paymentsum,
+    SeatsmaxB,
+    SeatsoccB,
+    SeatsmaxF,
+    SeatsoccF,
+    _Plan
+}

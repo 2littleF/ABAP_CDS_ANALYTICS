@@ -1,0 +1,29 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'FlugSitzplatz'
+@Metadata.ignorePropagatedAnnotations: true
+define view entity ZI_FLUGSITZPLATZXX as select from sflight
+{
+    key carrid as Carrid,
+    key connid as Connid,
+    key fldate as Fldate,
+    cast ('00000000' as s_date) as Initial_Datum,   
+    @Semantics.amount.currencyCode: 'Currency'
+    price as Price,
+    @Semantics.amount.currencyCode: 'Currency'    
+    price * 2 as Doppelter_Preis,
+    @Semantics.amount.currencyCode: 'Currency'
+    cast(price as abap.fltp) * 1.5  as Eineinhalb_Preis_Float,
+    @Semantics.amount.currencyCode: 'Currency'
+    cast( (cast(price as abap.fltp) * 1.5) as s_price ) as Eineinhalb_Preis,
+    currency as Currency,
+    seatsmax as Seatsmax,
+    seatsmax - seatsocc as Sitze_frei,
+    seatsmax_b as SeatsmaxB,
+    seatsmax_b - seatsocc_b as Sitze_frei_Business,
+    seatsmax_f as SeatsmaxF,
+    seatsmax_f - seatsocc_f as Sitze_frei_First,
+    seatsmax + seatsmax_b + seatsmax_f as Sitze_insgesamt,
+    (seatsmax + seatsmax_b + seatsmax_f) - (seatsocc + seatsocc_b + seatsocc_f) as Sitze_frei_insgesamt,
+    cast((division((seatsocc + seatsocc_b + seatsocc_f), (seatsmax + seatsmax_b + seatsmax_f), 4) * 100) as abap.dec(10,2)) as Sitze_prozentual  
+}

@@ -1,0 +1,9 @@
+extend view entity ZI_Flugplan00 with
+association [1] to ZI_Airport00 as _Abflug on $projection.Airpfrom = _Abflug.Id
+association [1] to ZI_Airport00 as _Ziel   on $projection.Airpto = _Ziel.Id
+{
+  _Abflug.Name as Abflugname,
+  _Ziel.Name   as Zielname,
+  _Abflug,
+  _Ziel
+} 

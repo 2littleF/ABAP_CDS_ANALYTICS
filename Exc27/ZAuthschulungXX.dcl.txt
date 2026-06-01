@@ -1,0 +1,11 @@
+@EndUserText.label: 'Berechtigungsprüfung'
+@MappingRole: true
+define role ZAUTHSCHULUNGXX {
+    grant
+        select
+            on
+                ZI_UMSATZ_PRO_FLUGXX
+                    where
+                        Carrid = 'LH';
+                        
+}

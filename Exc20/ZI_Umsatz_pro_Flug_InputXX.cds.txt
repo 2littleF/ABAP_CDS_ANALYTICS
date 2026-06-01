@@ -1,0 +1,18 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'UmsatzProFlugInput'
+@Metadata.ignorePropagatedAnnotations: false
+define view entity ZI_Umsatz_pro_Flug_InputXX as select from ZI_Flug_DatumXX 
+(
+p_target_curr: 'JPY',
+p_rate_date: $session.system_date )
+{
+    Carrid,
+    Connid,
+    @Semantics.amount.currencyCode: 'Buchung_Waehr'
+    sum(Price) as Umsatz_pro_Flug_Buchung_Waehr,
+    Currency as Buchung_Waehr,
+    @Semantics.amount.currencyCode: 'Zielwaehrung'
+    sum(Preis_Ziel_Waehrung) as Umsatz_pro_Flugverbindung,
+    Zielwaehrung
+} group by Carrid, Connid, Currency, Zielwaehrung
