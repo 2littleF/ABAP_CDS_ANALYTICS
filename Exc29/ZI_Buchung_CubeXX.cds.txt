@@ -1,0 +1,24 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'BuchungCubeXX'
+@Metadata.ignorePropagatedAnnotations: false
+@VDM.viewType: #COMPOSITE
+@Analytics.dataCategory: #CUBE
+define view entity ZI_Buchung_CubeXX as select from ZI_BuchungXX
+left outer join ZI_Flug_DimXX as _Flug_DimXX
+on ZI_BuchungXX.Carrid = _Flug_DimXX.Carrid
+and ZI_BuchungXX.Connid = _Flug_DimXX.Connid
+and ZI_BuchungXX.Fldate = _Flug_DimXX.Fldate
+{
+    key ZI_BuchungXX.Carrid,
+    key ZI_BuchungXX.Connid,
+    key ZI_BuchungXX.Fldate,
+    key ZI_BuchungXX.Bookid,
+    @Aggregation.default: #SUM
+    ZI_BuchungXX.Luggweight,
+    ZI_BuchungXX.Wunit,
+    ZI_BuchungXX.Class_Text,
+    @Aggregation.default: #MAX
+    ZI_BuchungXX.Buchung_im_Voraus,
+    _Flug_DimXX.Planetype as Planetype
+}

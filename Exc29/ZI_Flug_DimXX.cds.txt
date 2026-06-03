@@ -1,0 +1,19 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'FlugDimXX'
+@Metadata.ignorePropagatedAnnotations: false
+@VDM.viewType: #BASIC
+@Analytics.dataCategory: #DIMENSION
+define view entity ZI_Flug_DimXX as select from ZI_FlugXX
+{
+    key Carrid,
+    key Connid,
+    key Fldate,
+    Planetype,
+    Seatsmax,
+    Seatsocc,
+    SeatsmaxB,
+    SeatsoccB,
+    SeatsmaxF,
+    SeatsoccF
+}

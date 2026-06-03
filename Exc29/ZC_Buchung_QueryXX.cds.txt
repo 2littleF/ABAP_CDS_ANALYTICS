@@ -1,0 +1,18 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'BuchungQueryXX'
+@Metadata.ignorePropagatedAnnotations: false
+@VDM.viewType: #CONSUMPTION
+@Analytics.query: true
+define view entity ZC_BUCHUNG_QUERYXX as select from ZI_Buchung_CubeXX
+{
+    key Carrid,
+    key Connid,
+    key Fldate,
+    key Bookid,
+    Luggweight,
+    Wunit,
+    Class_Text,
+    Buchung_im_Voraus,
+    Planetype
+}
