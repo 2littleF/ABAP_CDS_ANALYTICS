@@ -37,5 +37,5 @@ inner join ZI_FlugXX as Flug
     Kunde.Custtype, 
     Flug.Preis_in_Euro,
     Flug.Currency_EUR,       
-    cast( (cast(Flug.Preis_in_Euro as abap.fltp) * 1) as s_price) as Preis_Eur_Rabatt
+    Flug.Preis_in_Euro as Preis_Eur_Rabatt
 } where Kunde.Custtype = 'P'
