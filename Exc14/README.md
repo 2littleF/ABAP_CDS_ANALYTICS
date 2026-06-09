@@ -9,4 +9,4 @@ Auf den Flügen mit dem meisten Umsatz, wie ist das durchschnittliche Buchungsve
 Verbinde die beiden CDS-Views über CARRID und CONNID<br>
 <br>
 Verdichte die durchschnittlichen Vorausbuchung über CARRID und CONNID und den Umsatz<br>
-![alt text](image.png)
+![alt text](image-1.png)
