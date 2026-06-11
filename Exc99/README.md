@@ -5,6 +5,8 @@
 ![
 ](image.png)
 <br>
+Namenskonvention: Statt ..XX jetzt ...HXX<br>
+<br>
 ***Als Besitzer von Lufthansa-Aktien möchte ich wissen, wie die Performance gegenüber den Mitbewerbern ist***<br>
 (Natürlich mit Klartextnamen, als ABAP-Report oder Embedded Analytics (nur Entwurf))<br>
 <br>
