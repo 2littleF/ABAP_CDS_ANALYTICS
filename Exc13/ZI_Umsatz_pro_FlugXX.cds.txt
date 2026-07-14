@@ -6,7 +6,7 @@ define view entity ZI_Umsatz_pro_FlugXX as select from ZI_FlugXX
 {
     Carrid,
     Connid,
-    @Semantics.amount.currencyCode: 'Currency_EUR'+
+    @Semantics.amount.currencyCode: 'Currency_EUR'
     sum(Preis_in_Euro) as Umsatz_pro_Flugverbindung,
     Currency_EUR
 } group by Carrid, Connid, Currency_EUR
